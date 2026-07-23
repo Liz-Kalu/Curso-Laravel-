@@ -5,10 +5,17 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/Components/ui/select';
 
-export default function Register() {
+export default function Register({ personalDisponible }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
+        id_personal: '',
         email: '',
         password: '',
         password_confirmation: '',
@@ -28,20 +35,30 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="id_personal" value="¿Quién eres?" />
 
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                    />
+                    <Select
+                        value={data.id_personal}
+                        onValueChange={(v) => setData('id_personal', v)}
+                    >
+                        <SelectTrigger id="id_personal" className="mt-1 w-full">
+                            <SelectValue placeholder="Selecciona tu nombre..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {personalDisponible.length === 0 && (
+                                <div className="px-2 py-1.5 text-sm text-muted-foreground">
+                                    No hay personal disponible para registrar.
+                                </div>
+                            )}
+                            {personalDisponible.map((p) => (
+                                <SelectItem key={p.id} value={String(p.id)}>
+                                    {p.nombre_completo}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
 
-                    <InputError message={errors.name} className="mt-2" />
+                    <InputError message={errors.id_personal} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
@@ -119,4 +136,3 @@ export default function Register() {
         </GuestLayout>
     );
 }
-

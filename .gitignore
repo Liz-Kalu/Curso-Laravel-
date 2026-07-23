@@ -1,0 +1,9 @@
+inertial-react/node_modules/
+inertial-react/vendor/
+inertial-react/.env
+inertial-react/.idea/
+inertial-react/storage/logs/
+inertial-react/storage/framework/views/
+inertial-react/bootstrap/cache/*.tmp
+inertial-react/bootstrap/cache/*.php
+inertial-react/public/hot

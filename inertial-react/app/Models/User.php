@@ -4,7 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'id_personal',
     ];
 
     /**
@@ -46,9 +47,12 @@ class User extends Authenticatable
         ];
     }
 
-    public function chirps() : HasMany{
-        return $this->hasMany(Chirp::class);
+
+    /**
+     * Persona (Personal) ligada a esta cuenta de usuario.
+     */
+    public function personal(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Personal::class, 'id_personal');
     }
-
-
 }
